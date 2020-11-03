@@ -1,0 +1,23 @@
+<% if flash[:info] %>
+<%= flash[:info] %>
+<% end %>
+
+<h1>買い物内容</h1>
+<% sum = 0 %>
+<% @products.each do |e| %>
+<p>商品名:<%= e.name %>
+値段:<%= e.price %>
+個数:
+<% if CartItem.find_by(product_id: e.id,cart_id: current_cart.id) %>
+<%= c = CartItem.find_by(product_id: e.id,cart_id: current_cart.id).qty %>個
+<% else %>
+<%= c = 0 %>個
+<% end %></p>
+<% sub_total = e.price.to_i * c.to_i %>
+<% sum+=sub_total %>
+小計:<%= sub_total %>円
+<p><%= link_to'カートに追加',cart_items_path(product_id: e.id),method: :post%></p>
+<p><%= link_to'カートから削除',"/cart_items/#{e.id}",method: :delete%></p>
+<% end %></p>
+<p>合計金額:<%= sum %>円</p>
+<p><%= link_to'商品登録','/products/new' %></p>

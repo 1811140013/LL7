@@ -1,0 +1,12 @@
+<% if flash[:info] %>
+<%= flash[:info] %>
+<% end %>
+
+<h1>商品一覧</h1>
+<% @products.each do |e| %>
+<p>商品名：<%=e.name%></p>
+<p>値段：<%=e.price%></p>
+<%= link_to'削除',product_path(e),method: :delete%>
+<% end %>
+
+<p><%=link_to'新規登録',new_product_path %></p>
